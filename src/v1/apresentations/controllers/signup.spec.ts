@@ -1,10 +1,7 @@
+
+import { type EmailValidator, AddAccount, AddAccountSchema, Account  } from './sign.up.protocols'
+import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import { SignUpController } from './signup.controller'
-import { InvalidParamError, MissingParamError, ServerError } from '../errors'
-import { type EmailValidator } from '../protocols'
-import { type AddAccount } from '../../domain/usecases'
-import { type AddAccountSchema } from '../../domain/schemas'
-import { type Account } from '../../domain/entities'
-import { log } from 'console'
 
 interface SutTypes {
   sut: SignUpController
@@ -24,7 +21,6 @@ const makeEmailValidator = (): EmailValidator => {
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     execute (account: AddAccountSchema): Account {
-      log(account)
       return {
         id: 'valid_id',
         name: 'valid_name',

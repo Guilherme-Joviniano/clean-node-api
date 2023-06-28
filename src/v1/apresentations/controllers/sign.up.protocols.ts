@@ -1,0 +1,5 @@
+export * from '../protocols/'
+export * from '../protocols/email-validator.protocol'
+export * from '../../domain/usecases/add-account.protocol'
+export * from '../../domain/schemas/add-account.schema'
+export * from '../../domain/entities/account.entity'
