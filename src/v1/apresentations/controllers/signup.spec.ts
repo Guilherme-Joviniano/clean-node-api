@@ -1,10 +1,15 @@
 import { SignUpController } from './signup.controller'
 import { InvalidParamError, MissingParamError, ServerError } from '../errors'
 import { type EmailValidator } from '../protocols'
+import { type AddAccount } from '../../domain/usecases'
+import { type AddAccountSchema } from '../../domain/schemas'
+import { type Account } from '../../domain/entities'
+import { log } from 'console'
 
 interface SutTypes {
   sut: SignUpController
   emailValidatorStub: EmailValidator
+  addAccountStub: AddAccount
 }
 
 const makeEmailValidator = (): EmailValidator => {
@@ -16,11 +21,29 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
+const makeAddAccount = (): AddAccount => {
+  class AddAccountStub implements AddAccount {
+    execute (account: AddAccountSchema): Account {
+      log(account)
+      return {
+        id: 'valid_id',
+        name: 'valid_name',
+        email: 'valid_email',
+        password: 'valid_password'
+      }
+    }
+  }
+
+  return new AddAccountStub()
+}
+
 const makeSut = (): SutTypes => {
-  const emailValidator = makeEmailValidator()
+  const addAccountStub = makeAddAccount()
+  const emailValidatorStub = makeEmailValidator()
   return {
-    sut: new SignUpController(emailValidator),
-    emailValidatorStub: emailValidator
+    sut: new SignUpController(emailValidatorStub, addAccountStub),
+    emailValidatorStub,
+    addAccountStub
   }
 }
 
@@ -159,5 +182,30 @@ describe('test the signup controller', () => {
 
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  it('should call AddAccount with correct fields', () => {
+    const { sut } = makeSut()
+
+    const executeSpy = jest.spyOn(sut.addAccount, 'execute')
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_email@gmail.com',
+        password: 'any_password',
+        passwordConfirmation: 'any_password'
+      }
+    }
+
+    sut.handle(httpRequest)
+     
+    expect(executeSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        name: 'any_name',
+        email: 'any_email@gmail.com',
+        password: 'any_password',
+      })
+    )
   })
 })
