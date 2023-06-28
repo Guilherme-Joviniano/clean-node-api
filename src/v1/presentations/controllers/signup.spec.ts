@@ -1,5 +1,5 @@
 
-import { type EmailValidator, AddAccount, AddAccountSchema, Account  } from './sign.up.protocols'
+import { type EmailValidator, type AddAccount, type AddAccountSchema, type Account } from './sign.up.protocols'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import { SignUpController } from './signup.controller'
 
@@ -21,13 +21,13 @@ const makeEmailValidator = (): EmailValidator => {
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async execute (account: AddAccountSchema): Promise<Account> {
-      const fakeAccount =  {
+      const fakeAccount = {
         id: 'valid_id',
         name: 'valid',
         email: 'valid@gmail.com',
-        password: 'valid_password',
+        password: 'valid_password'
       }
-      return new Promise(resolve => resolve(fakeAccount))
+      return await new Promise(resolve => { resolve(fakeAccount) })
     }
   }
 
@@ -86,7 +86,7 @@ describe('test the signup controller', () => {
         passwordConfirmation: 'any_password'
       }
     }
-    const httpResponse = await  sut.handle(httpRequest)
+    const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new MissingParamError('password'))
   })
@@ -196,12 +196,12 @@ describe('test the signup controller', () => {
     }
 
     await sut.handle(httpRequest)
-     
+
     expect(executeSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'any_name',
         email: 'any_email@gmail.com',
-        password: 'any_password',
+        password: 'any_password'
       })
     )
   })
@@ -210,7 +210,7 @@ describe('test the signup controller', () => {
     const { sut, addAccountStub } = makeSut()
 
     jest.spyOn(addAccountStub, 'execute').mockImplementation(async () => {
-      return new Promise((_, reject) => reject(new Error()))
+      return await new Promise((resolve, reject) => { reject(new Error()) })
     })
 
     const httpRequest = {
@@ -234,19 +234,19 @@ describe('test the signup controller', () => {
     const httpRequest = {
       body: {
         name: 'valid',
-      email: 'valid@gmail.com',
-      password: 'valid_password',
+        email: 'valid@gmail.com',
+        password: 'valid_password',
         passwordConfirmation: 'valid_password'
       }
     }
 
     const httpResponse = await sut.handle(httpRequest)
-     
+
     expect(httpResponse.body).toEqual({
       id: 'valid_id',
       name: 'valid',
       email: 'valid@gmail.com',
-      password: 'valid_password',
+      password: 'valid_password'
     })
   })
 })
