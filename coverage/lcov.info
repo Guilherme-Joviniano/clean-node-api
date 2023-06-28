@@ -1,5 +1,5 @@
 TN:
-SF:src\v1\apresentations\controllers\signup.ts
+SF:src\v1\apresentations\controllers\signup.controller.ts
 FN:4,handle
 FNF:1
 FNH:1
@@ -31,7 +31,7 @@ BRF:2
 BRH:2
 end_of_record
 TN:
-SF:src\v1\apresentations\protocols\http.ts
+SF:src\v1\apresentations\protocols\http.protocol.ts
 FN:1,(empty-report)
 FNF:1
 FNH:0

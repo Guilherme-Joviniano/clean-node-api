@@ -1,7 +1,7 @@
-import { SignUpController } from './signup'
+import { SignUpController } from './signup.controller'
 
 describe('test the signup controller', () => {
-  test('it should return 400 if no name is provided', async () => {
+  it('should return 400 if no name is provided', async () => {
     // sut = System under test
     const sut = new SignUpController()
     const httpRequest = {
@@ -16,7 +16,7 @@ describe('test the signup controller', () => {
     expect(httpResponse.body).toEqual(new Error('Missing param: name (string)'))
   })
 
-  test('it should return 400 if no email is provided', async () => {
+  it('should return 400 if no email is provided', async () => {
     // sut = System under test
     const sut = new SignUpController()
     const httpRequest = {

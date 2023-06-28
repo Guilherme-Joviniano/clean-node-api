@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1687876629604" clover="3.2.0">
-  <project timestamp="1687876629604" name="All files">
+<coverage generated="1687877349107" clover="3.2.0">
+  <project timestamp="1687877349108" name="All files">
     <metrics statements="27" coveredstatements="19" conditionals="3" coveredconditionals="2" methods="2" coveredmethods="1" elements="32" coveredelements="22" complexity="0" loc="27" ncloc="27" packages="2" files="2" classes="2"/>
     <package name="controllers">
       <metrics statements="19" coveredstatements="19" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
-      <file name="signup.ts" path="C:\Users\guilherme.sousa\WebstormProjects\clean-node-api\src\v1\apresentations\controllers\signup.ts">
+      <file name="signup.controller.ts" path="C:\Users\guilherme.sousa\WebstormProjects\clean-node-api\src\v1\apresentations\controllers\signup.controller.ts">
         <metrics statements="19" coveredstatements="19" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
@@ -29,7 +29,7 @@
     </package>
     <package name="protocols">
       <metrics statements="8" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
-      <file name="http.ts" path="C:\Users\guilherme.sousa\WebstormProjects\clean-node-api\src\v1\apresentations\protocols\http.ts">
+      <file name="http.protocol.ts" path="C:\Users\guilherme.sousa\WebstormProjects\clean-node-api\src\v1\apresentations\protocols\http.protocol.ts">
         <metrics statements="8" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
         <line num="2" count="0" type="stmt"/>
