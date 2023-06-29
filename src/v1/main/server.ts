@@ -1,7 +1,9 @@
-import fastify from 'fastify'
+import app from './configs/app'
 
-const app = fastify()
+async function main (): Promise<void> {
+  app.listen({
+    port: 3333
+  })
+}
 
-app.server.listen(3333, () => {
-  console.log('running on port http://localhost:3333')
-})
+main().then(() => { console.log('Running on port 3333') }).catch((err) => { console.log(err) })
