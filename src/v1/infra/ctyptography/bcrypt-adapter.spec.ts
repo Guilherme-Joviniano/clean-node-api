@@ -5,6 +5,12 @@ interface SutTypes {
   sut: BcryptAdapter
 }
 
+jest.mock('bcrypt', () => ({
+  async hash (value: string): Promise<string> {
+    return await new Promise((resolve) => { resolve('any_value_hashed') })
+  }
+}))
+
 describe('Bcrypt Adapter', () => {
   const salt = 8
   const makeSut = (): SutTypes => {
@@ -20,5 +26,11 @@ describe('Bcrypt Adapter', () => {
     await sut.encrypt('any_value')
 
     expect(bcryptSpy).toHaveBeenCalledWith('any_value', salt)
+  })
+
+  it('should returns a hash on success', async () => {
+    const { sut } = makeSut()
+    const hash = await sut.encrypt('any_value')
+    expect(hash).toBe('any_value_hashed')
   })
 })
