@@ -12,6 +12,7 @@ module.exports = {
   roots: [
     '<rootDir>/src'
   ],
+  preset: '@shelf/jest-mongodb',
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
