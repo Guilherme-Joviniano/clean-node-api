@@ -89,4 +89,21 @@ describe('DbAddAccount UseCase', () => {
       expect.objectContaining({ ...mock })
     )
   })
+
+  it('should returns a Account with passed correct values', async () => {
+    const { sut } = makeSut()
+
+    const mock = {
+      name: 'valid_name',
+      email: 'valid_email@email.com',
+      password: 'valid_password'
+    }
+
+    const account = await sut.execute(mock)
+
+    expect(account).toEqual({
+      ...mock,
+      id: 'valid_id'
+    })
+  })
 })
