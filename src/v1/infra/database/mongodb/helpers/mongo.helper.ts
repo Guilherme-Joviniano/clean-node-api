@@ -1,4 +1,5 @@
 import { MongoClient, type Collection } from 'mongodb'
+import { type Account } from '../account-repository/account.protocol'
 
 export const MongoHelper = {
   client: null as MongoClient,
@@ -10,5 +11,9 @@ export const MongoHelper = {
   },
   async getCollection (name: string): Promise<Collection> {
     return this.client.db().collection(name)
+  },
+  map (account: any): Account {
+    const { _id, ...accountWithoutId } = account
+    return Object.assign({}, accountWithoutId, { id: _id.toHexString() }) as Account
   }
 }
