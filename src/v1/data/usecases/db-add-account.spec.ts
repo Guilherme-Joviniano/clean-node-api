@@ -17,25 +17,27 @@ describe('DbAddAccount UseCase', () => {
     return new CrypterStub()
   }
   const makeSut = (): SutTypes => {
-    const sut = new DbAddAccount()
     const crypterStub = makeCrypter()
+    const sut = new DbAddAccount(crypterStub)
     return {
       sut,
       crypterStub
     }
   }
-  it('Should call the Encrypter with correct password', () => {
+
+  it('Should call the crypter with correct password', async () => {
     const { sut, crypterStub } = makeSut()
-    const accountData = {
+
+    const account = {
       name: 'valid_name',
       email: 'valid_email@email.com',
       password: 'valid_password'
     }
 
-    const encryptySpy = jest.spyOn(crypterStub, 'encrypt')
+    const crypterSpy = jest.spyOn(crypterStub, 'encrypt')
 
-    sut.execute(accountData)
+    await sut.execute(account)
 
-    expect(encryptySpy).toHaveBeenCalledWith('valid_password')
+    expect(crypterSpy).toHaveBeenCalledWith('valid_password')
   })
 })
