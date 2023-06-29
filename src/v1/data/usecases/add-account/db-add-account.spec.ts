@@ -10,7 +10,7 @@ interface SutTypes {
 describe('DbAddAccount UseCase', () => {
   const makeAddAccountRepository = (): AddAccountRepository => {
     class AddAccountRepositoryStub implements AddAccountRepository {
-      async execute (account: AddAccountSchema): Promise<Account> {
+      async add (account: AddAccountSchema): Promise<Account> {
         return { ...account, id: 'valid_id' }
       }
     }
@@ -75,7 +75,7 @@ describe('DbAddAccount UseCase', () => {
   it('should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepository } = makeSut()
 
-    const addAccountRepositorySpy = jest.spyOn(addAccountRepository, 'execute')
+    const addAccountRepositorySpy = jest.spyOn(addAccountRepository, 'add')
 
     const mock = {
       name: 'valid_name',

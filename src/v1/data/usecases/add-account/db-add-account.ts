@@ -12,7 +12,7 @@ export class DbAddAccount implements DbAddUseCase {
 
   async execute (accountData: AddAccountSchema): Promise<Account> {
     const hashedPassword = await this.crypter.encrypt(accountData.password)
-    const account = await this.addAccountRepository.execute(Object.assign({}, accountData, { password: hashedPassword }))
+    const account = await this.addAccountRepository.add(Object.assign({}, accountData, { password: hashedPassword }))
     return account
   }
 }
