@@ -10,6 +10,10 @@ describe('Account MongoDB Repository', () => {
 
   afterAll(async () => { await MongoHelper.disconnect() })
 
+  beforeEach(async () => {
+    const accountCollection = await MongoHelper.getCollection('accounts')
+    await accountCollection.deleteMany({})
+  })
   const mock: AddAccountSchema = {
     name: 'any_name',
     email: 'any_email@email.com',
