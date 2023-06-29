@@ -1,6 +1,5 @@
-import { type Account } from '../../domain/entities'
-import { type AddAccountSchema } from '../../domain/schemas'
-import { type DbAddUseCase, type Crypter } from './db-add-account.protocol'
+
+import { type DbAddUseCase, type Crypter, type AddAccountSchema, type Account } from './db-add-account.protocol'
 
 export class DbAddAccount implements DbAddUseCase {
   private readonly crypter: Crypter
