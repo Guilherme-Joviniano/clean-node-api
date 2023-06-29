@@ -1,4 +1,3 @@
-import { log } from 'console'
 import { Router, type Express } from 'express'
 import fg from 'fast-glob'
 

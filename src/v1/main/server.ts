@@ -1,8 +1,11 @@
+import { MongoHelper } from '../infra/database/mongodb/helpers/mongo.helper'
 import app from './configs/app'
+import env from './env'
 
 async function main (): Promise<void> {
+  await MongoHelper.connect(env.mongoUrl)
   app.listen({
-    port: 3333
+    port: env.port
   })
 }
 
