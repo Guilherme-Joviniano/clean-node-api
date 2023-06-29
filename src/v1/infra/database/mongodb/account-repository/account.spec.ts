@@ -1,8 +1,8 @@
-import { AccountRepository } from './account'
+import { AccountMongoRepository } from './account'
 import { type AddAccountSchema } from './account.protocol'
 import { MongoHelper } from '../helpers/mongo.helper'
 interface SutTypes {
-  sut: AccountRepository
+  sut: AccountMongoRepository
 }
 
 describe('Account MongoDB Repository', () => {
@@ -20,7 +20,7 @@ describe('Account MongoDB Repository', () => {
     password: 'hash_password'
   }
   const makeSut = (): SutTypes => {
-    const accountMongoRepository = new AccountRepository()
+    const accountMongoRepository = new AccountMongoRepository()
     return {
       sut: accountMongoRepository
     }
