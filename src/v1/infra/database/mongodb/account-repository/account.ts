@@ -1,4 +1,4 @@
-import { MongoHelper } from '../helpers/mongo.helper'
+import {MongoHelper} from '../helpers/mongo.helper'
 import { type Account, type AddAccountRepository, type AddAccountSchema } from './account.protocol'
 
 export class AccountMongoRepository implements AddAccountRepository {
