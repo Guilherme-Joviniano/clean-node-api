@@ -2,7 +2,6 @@
 import { type EmailValidator, type AddAccount, type AddAccountSchema, type Account, type HttpRequest } from './sign.up.protocols'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import { SignUpController } from './signup.controller'
-import { serverError } from '../helpers/http.helper'
 
 interface SutTypes {
   sut: SignUpController
