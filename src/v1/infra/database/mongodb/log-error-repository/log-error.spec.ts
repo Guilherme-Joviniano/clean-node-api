@@ -1,10 +1,10 @@
 
 import { type Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo.helper'
-import { LogErrorRepository } from './log-error'
+import { LogErrorMongoRepository } from './log-error'
 
 interface SutTypes {
-  sut: LogErrorRepository
+  sut: LogErrorMongoRepository
 }
 
 describe('LogError MongoDB Repository', () => {
@@ -20,7 +20,7 @@ describe('LogError MongoDB Repository', () => {
   })
 
   const makeSut = (): SutTypes => {
-    const logErrorRepository = new LogErrorRepository()
+    const logErrorRepository = new LogErrorMongoRepository()
     return {
       sut: logErrorRepository
     }
