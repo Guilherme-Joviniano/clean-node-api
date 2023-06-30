@@ -2,6 +2,7 @@
 import { type EmailValidator, type AddAccount, type AddAccountSchema, type Account } from './sign.up.protocols'
 import { MissingParamError, InvalidParamError, ServerError } from '../errors'
 import { SignUpController } from './signup.controller'
+import { serverError } from '../helpers/http.helper'
 
 interface SutTypes {
   sut: SignUpController
@@ -162,8 +163,11 @@ describe('test the signup controller', () => {
   it('should returns 500 if EmailValidator throws', async () => {
     const { sut, emailValidatorStub } = makeSut()
 
+    const fakeError = new Error()
+    fakeError.stack = 'any'
+
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementation(() => {
-      throw new Error()
+      throw fakeError
     })
 
     const httpRequest = {
@@ -177,8 +181,10 @@ describe('test the signup controller', () => {
 
     const httpResponse = await sut.handle(httpRequest)
 
+    console.error(httpResponse)
+
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError('any'))
   })
 
   it('should call AddAccount with correct fields', async () => {
@@ -209,8 +215,12 @@ describe('test the signup controller', () => {
   it('should returns 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
 
+    const fakeError = new Error()
+    fakeError.stack = 'any'
+    const error = serverError(fakeError)
+
     jest.spyOn(addAccountStub, 'execute').mockImplementation(async () => {
-      return await new Promise((resolve, reject) => { reject(new Error()) })
+      return await new Promise((resolve, reject) => { reject(error) })
     })
 
     const httpRequest = {
@@ -225,7 +235,7 @@ describe('test the signup controller', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError('any'))
   })
 
   it('should returns 200 if valid data is provided', async () => {
