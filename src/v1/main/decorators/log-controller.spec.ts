@@ -45,8 +45,36 @@ describe('Log Decorator for Controllers', () => {
     )
   })
 
-  it('should log if statusCode is 500', () => {
-    // const { sut, controller } = makeSut()
-    
+  it('should returns the same result of the controller', async () => {
+    const { sut, controller } = makeSut()
+
+    jest.spyOn(controller, 'handle').mockImplementationOnce(async () => {
+      return await new Promise((resolve) => {
+        resolve({
+          statusCode: 200,
+          body: {
+            name: 'John Doe'
+          }
+        })
+      })
+    })
+
+    const httpRequest = {
+      body: {
+        name: 'John Doe',
+        email: 'valid_email@gmail.com',
+        password: '123',
+        passwordConfirmation: '123'
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse).toEqual({
+      statusCode: 200,
+      body: {
+        name: 'John Doe'
+      }
+    })
   })
 })
